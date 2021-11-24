@@ -28,4 +28,5 @@ USER odoo
 EXPOSE 8069 8071 8072
 
 #ENTRYPOINT ./odoo-bin --addons-path="addons/" -d rd-demo
-ENTRYPOINT python run_infinity.py
+#ENTRYPOINT python run_infinity.py
+ENTRYPOINT gunicorn odoo.service.wsgi_server:application -c /odoo/odoo/service/wsgi_server_conf.py

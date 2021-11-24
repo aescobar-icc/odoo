@@ -1153,7 +1153,7 @@ def load_server_wide_modules():
                 msg = """
 The `web` module is provided by the addons found in the `openerp-web` project.
 Maybe you forgot to add those addons in your addons_path configuration."""
-            _logger.exception('Failed to load server-wide module `%s`.%s', m, msg)
+            _logger.exception('Failed to load server-wide module `%s`.%s  addons path:%s' , m, msg,odoo.tools.config['addons_path'])
 
 def _reexec(updated_modules=None):
     """reexecute openerp-server process with (nearly) the same arguments"""
