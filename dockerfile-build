@@ -1,0 +1,33 @@
+FROM aescobaricc/base-odoo:0.0.1
+
+RUN git config --global pull.rebase false
+
+# Set the default config file
+ENV ODOO_RC /etc/odoo/odoo.conf
+ENV ODOO_CONFIGURATION_FILE=/etc/odoo/odoo.conf
+ENV ODOO_GROUP="odoo"
+ENV ODOO_USER="odoo"
+ENV ODOO_DATA_DIR=/var/lib/odoo
+ENV ODOO_LOG_DIR=/var/log/odoo
+
+WORKDIR /odoo
+COPY ./debian/odoo.conf /etc/odoo/
+
+RUN adduser --system --home $ODOO_DATA_DIR --quiet --group $ODOO_USER
+RUN chown $ODOO_USER $ODOO_CONFIGURATION_FILE
+RUN mkdir -p $ODOO_DATA_DIR
+RUN mkdir -p $ODOO_LOG_DIR
+RUN chown -R $ODOO_USER $ODOO_DATA_DIR
+RUN chown -R $ODOO_USER $ODOO_LOG_DIR
+
+# Set default user when running the container
+
+# Expose Odoo services
+EXPOSE 8069 8071 8072
+
+COPY ./ /odoo/
+RUN chown -R $ODOO_USER /odoo
+#RUN pip install .
+
+USER odoo
+ENTRYPOINT gunicorn odoo.service.wsgi_server:application -c /odoo/odoo/service/wsgi_server_conf.py

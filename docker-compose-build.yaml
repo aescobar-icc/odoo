@@ -1,0 +1,7 @@
+version: '3.5'
+services:
+  odoo_app:
+    image: $IMAGE_NAME:$CODE_VERSION
+    build:
+      context: .
+      dockerfile: ./dockerfile-build
