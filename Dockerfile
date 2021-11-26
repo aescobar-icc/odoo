@@ -27,6 +27,8 @@ USER odoo
 # Expose Odoo services
 EXPOSE 8069 8071 8072
 
-#ENTRYPOINT ./odoo-bin --addons-path="addons/" -d rd-demo
+#usar este entrypoint para generar db
+#ENTRYPOINT ./odoo-bin --addons-path="addons/" -d test_02
+
 #ENTRYPOINT python run_infinity.py
-ENTRYPOINT gunicorn odoo.service.wsgi_server:application -c /odoo/odoo/service/wsgi_server_conf.py
+ENTRYPOINT gunicorn odoo.service.wsgi_server:application -c /odoo/odoo/service/wsgi_server_conf.py --reload

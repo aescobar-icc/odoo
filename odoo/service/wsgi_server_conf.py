@@ -27,7 +27,7 @@ conf = odoo.tools.config
 # Path to the OpenERP Addons repository (comma-separated for
 # multiple locations)
 
-conf['addons_path'] = '/odoo/addons/'
+#conf['addons_path'] = '/odoo/addons/'
 # Optional database config if not using local socket
 # conf['init']['base'] = True
 # conf['db_host'] = os.getenv('PGHOST')
@@ -53,3 +53,6 @@ pidfile = '.gunicorn.pid'
 workers = 4
 timeout = 240
 max_requests = 2000
+accesslog = '-'
+errorlog  = '-'
+

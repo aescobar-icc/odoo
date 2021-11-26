@@ -11,15 +11,13 @@ services:
       odoo_net:
         ipv4_address: 172.20.5.2
     image: aescobaricc/base-postgres:0.0.1
-    container_name: odoo_db
+    container_name: odoo_db_dev
     restart: always
     env_file:
       - .env
     volumes:
       -  ./odoo-db-init/:/docker-entrypoint-initdb.d/
       - ../odoo-postgres-db:/var/lib/postgresql/data
-      - ../odoo-data:/var/lib/odoo
-      - ../odoo-log:/var/log/odoo
     ports:
       - "5432:5432"
 
@@ -27,15 +25,17 @@ services:
     networks: 
       odoo_net:
         ipv4_address: 172.20.5.3
-    container_name: odoo_app
+    container_name: odoo_app_dev
     restart: always
     env_file:
       - .env
     volumes:
       - ./:/odoo
+      - ../odoo-data:/var/lib/odoo
+      - ../odoo-log:/var/log/odoo
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
       - "8069:8069"
     links:
